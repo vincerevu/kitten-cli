@@ -2,6 +2,13 @@ version = 1
 revision = 3
 requires-python = ">=3.11"
 
+[manifest]
+members = [
+    "kitten-cli",
+    "kitten-core",
+    "kitten-workspace",
+]
+
 [[package]]
 name = "aiohappyeyeballs"
 version = "2.6.2"
@@ -732,7 +739,24 @@ wheels = [
 [[package]]
 name = "kitten-cli"
 version = "0.1.0"
-source = { virtual = "." }
+source = { editable = "packages/cli" }
+dependencies = [
+    { name = "kitten-core" },
+    { name = "rich" },
+    { name = "typer" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "kitten-core", editable = "packages/core" },
+    { name = "rich", specifier = ">=13.0.0" },
+    { name = "typer", specifier = ">=0.12.0" },
+]
+
+[[package]]
+name = "kitten-core"
+version = "0.1.0"
+source = { editable = "packages/core" }
 dependencies = [
     { name = "filelock" },
     { name = "langchain-core" },
@@ -743,8 +767,6 @@ dependencies = [
     { name = "pydantic-settings" },
     { name = "python-dotenv" },
     { name = "pyyaml" },
-    { name = "rich" },
-    { name = "typer" },
 ]
 
 [package.metadata]
@@ -758,9 +780,12 @@ requires-dist = [
     { name = "pydantic-settings", specifier = ">=2.0.0" },
     { name = "python-dotenv", specifier = ">=1.0.0" },
     { name = "pyyaml", specifier = ">=6.0.0" },
-    { name = "rich", specifier = ">=13.0.0" },
-    { name = "typer", specifier = ">=0.12.0" },
 ]
+
+[[package]]
+name = "kitten-workspace"
+version = "0.1.0"
+source = { virtual = "." }
 
 [[package]]
 name = "langchain-core"
