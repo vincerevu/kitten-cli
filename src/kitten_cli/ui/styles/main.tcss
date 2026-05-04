@@ -1,57 +1,85 @@
 /* Main Stylesheet for Kitten CLI */
 
 MainScreen {
-    layout: vertical;
     background: $background;
+    color: $foreground;
 }
 
-AppHeader {
-    height: 5;
+Header {
     dock: top;
-    background: $panel;
-    color: $text;
-    padding: 0 2;
-    border-bottom: solid $primary;
+    height: 1;
+    background: $primary;
+    color: $background;
 }
 
-.header-logo {
-    color: $accent;
-    text-style: bold;
+Footer {
+    dock: bottom;
+    height: 1;
+    background: $surface;
+    color: $foreground;
 }
 
-MainContent {
+#chat-list {
     height: 1fr;
     background: $background;
-    padding: 1 2;
 }
 
-#chat-history {
-    height: 1fr;
-    scrollbar-size: 1 1;
-}
-
-.chat-message {
-    padding: 1 2;
-    margin-bottom: 1;
-    border: solid $surface-light;
-    width: 100%;
-}
-
-.ai-message {
-    border-left: thick $primary;
-    background: $surface;
-}
-
-.user-message {
-    border-left: thick $accent;
-    background: $surface;
-}
-
-AppFooter {
-    height: 3;
+#composer-container {
     dock: bottom;
-    background: $panel;
-    color: $text-muted;
+    height: auto;
+    border-top: solid $gray;
+    background: $background;
+}
+
+Composer {
+    height: auto;
+    max-height: 10;
+    border: none;
+    background: $surface;
+}
+
+/* Primitives */
+SpinnerWidget {
+    color: $accent-cyan;
+}
+
+StatusWidget {
+    margin: 1 0;
+    color: $accent-cyan;
+}
+
+.status-icon {
+    color: $accent-cyan;
+}
+.status-text {
+    color: $gray;
+}
+
+DataTable {
+    background: $background;
+    border: none;
+}
+
+/* History */
+MessageBubble {
+    margin: 1 2;
     padding: 1 2;
-    border-top: solid $surface-light;
+    background: $surface;
+    border-left: thick $primary;
+}
+
+MessageBubble.user {
+    border-left: none;
+    border-right: thick $accent;
+    background: $background;
+}
+
+.bubble-sender {
+    color: $gray;
+    text-style: bold;
+    margin-bottom: 1;
+}
+
+.bubble-content {
+    color: $foreground;
 }
