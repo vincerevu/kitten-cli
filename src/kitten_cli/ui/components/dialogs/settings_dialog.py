@@ -1,8 +1,9 @@
 from textual.screen import ModalScreen
 from textual.app import ComposeResult
 from textual.containers import Vertical, Horizontal
-from textual.widgets import Label, Button, Input
+from textual.widgets import Label, Button, Input, Select
 from kitten_cli.config.manager import ConfigManager
+from kitten_cli.llm.models import SUPPORTED_MODELS
 
 class SettingsDialog(ModalScreen[None]):
     """A dialog to configure application settings."""
@@ -53,6 +54,11 @@ class SettingsDialog(ModalScreen[None]):
             yield Label("⚙️ Model Settings", classes="text-bold")
             
             with Vertical(classes="setting-row"):
+                yield Label("Predefined Models", classes="setting-label")
+                options = [(m["name"], m["litellm_model"]) for m in SUPPORTED_MODELS]
+                yield Select(options, prompt="Choose a popular model or type custom below...", id="model-select")
+
+            with Vertical(classes="setting-row"):
                 yield Label("Model (LiteLLM format)", classes="setting-label")
                 yield Input(placeholder="e.g. gemini/gemini-1.5-pro", id="model-input")
                 
@@ -68,6 +74,17 @@ class SettingsDialog(ModalScreen[None]):
                 yield Button("Cancel", variant="error", id="cancel", classes="dialog-button")
                 yield Button("Save", variant="success", id="save", classes="dialog-button")
                 
+    def on_select_changed(self, event: Select.Changed) -> None:
+        if event.select.id == "model-select" and event.value:
+            # Auto-fill the inputs based on selected model
+            self.query_one("#model-input", Input).value = str(event.value)
+            
+            for m in SUPPORTED_MODELS:
+                if m["litellm_model"] == event.value:
+                    if "default_base_url" in m:
+                        self.query_one("#base-url-input", Input).value = m["default_base_url"]
+                    break
+
     def on_button_pressed(self, event: Button.Pressed) -> None:
         if event.button.id == "save":
             self.config.llm.model = self.query_one("#model-input", Input).value
@@ -82,3 +99,4 @@ class SettingsDialog(ModalScreen[None]):
             self.dismiss(None)
         else:
             self.dismiss(None)
+
