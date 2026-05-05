@@ -35,7 +35,7 @@ class MessageBubble(Widget):
     
     def __init__(self, message: Dict[str, Any], **kwargs):
         super().__init__(**kwargs)
-        self.message = message
+        self.message_data = message
         self.msg_type = message.get("type", "unknown")
         self.content = message.get("text", "")
         
@@ -50,7 +50,23 @@ class MessageBubble(Widget):
             
         # For AI messages we might want to use Markdown rendering
         if self.msg_type in ["gemini", "ai"]:
-            yield Markdown(self.content)
+            yield Markdown(self.content, id="md-content")
         else:
             prefix = "👤 " if self.msg_type in ["user", "user_shell"] else "⚙️ "
-            yield Static(f"{prefix}{self.content}")
+            yield Static(f"{prefix}{self.content}", id="static-content")
+
+    def update_text(self, new_text: str) -> None:
+        self.content = new_text
+        self.message_data["text"] = new_text
+        if self.msg_type in ["gemini", "ai"]:
+            try:
+                self.query_one("#md-content", Markdown).update(new_text)
+            except Exception:
+                pass
+        else:
+            try:
+                prefix = "👤 " if self.msg_type in ["user", "user_shell"] else "⚙️ "
+                self.query_one("#static-content", Static).update(f"{prefix}{new_text}")
+            except Exception:
+                pass
+
