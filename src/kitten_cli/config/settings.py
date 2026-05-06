@@ -1,5 +1,12 @@
 from pydantic import BaseModel, Field
 from typing import Optional
+from enum import Enum
+
+class ApprovalMode(str, Enum):
+    DEFAULT = "default"
+    AUTO_EDIT = "autoEdit"
+    YOLO = "yolo"
+    PLAN = "plan"
 
 class LLMConfig(BaseModel):
     """Configuration for a specific Language Model profile."""
@@ -16,3 +23,4 @@ class AppConfig(BaseModel):
     workspace_base: str = Field(default="./")
     max_iterations: int = Field(default=10)
     theme: str = Field(default="gemini-dark")
+    approval_mode: ApprovalMode = Field(default=ApprovalMode.DEFAULT)
