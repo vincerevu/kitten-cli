@@ -119,9 +119,24 @@ class AgentExecutor:
                 req_args = {}
                 if tc["arguments"]:
                     try:
-                        req_args = json.loads(tc["arguments"])
-                    except json.JSONDecodeError:
-                        pass
+                        parsed = json.loads(tc["arguments"])
+                        if not isinstance(parsed, dict):
+                            raise ValueError(f"Expected dict, got {type(parsed).__name__}")
+                        req_args = parsed
+                    except (json.JSONDecodeError, ValueError) as ex:
+                        # Return error to LLM so it can retry with valid args
+                        error_msg = f"Error: Invalid tool arguments for '{tool_name}': {ex}"
+                        res_info = ToolCallResponseInfo(
+                            callId=tc["id"], name=tool_name,
+                            result=error_msg, isError=True,
+                        )
+                        yield AgentEvent(type=AgentEventType.TOOL_CALL_RESPONSE, value=res_info)
+                        history.append({
+                            "role": "tool",
+                            "tool_call_id": tc["id"],
+                            "content": error_msg,
+                        })
+                        continue
 
                 # Emit TOOL_CALL_REQUEST
                 req_info = ToolCallRequestInfo(
