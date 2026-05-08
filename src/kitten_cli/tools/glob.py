@@ -1,7 +1,4 @@
-"""
-GlobTool — Find files matching glob patterns.
-Ref: gemini-cli/packages/core/src/tools/glob.ts
-"""
+
 import os
 import glob as glob_module
 from typing import Any, Optional

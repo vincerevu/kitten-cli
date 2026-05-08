@@ -1,7 +1,4 @@
-"""
-WriteFileTool — Create or overwrite files.
-Ref: gemini-cli/packages/core/src/tools/write-file.ts
-"""
+
 import os
 from typing import Any
 from kitten_cli.tools.base import DeclarativeTool, ToolKind, ToolResult

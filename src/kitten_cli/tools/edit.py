@@ -1,7 +1,4 @@
-"""
-EditTool — Edit existing files with search-and-replace.
-Ref: gemini-cli/packages/core/src/tools/edit.ts (43KB — simplified core logic)
-"""
+
 import os
 import difflib
 from typing import Any, Optional

@@ -1,7 +1,4 @@
-"""
-Base tool framework.
-Ref: gemini-cli/packages/core/src/tools/tools.ts — DeclarativeTool, ToolResult
-"""
+
 from abc import ABC, abstractmethod
 from enum import Enum
 from typing import Any, Dict, List, Optional
@@ -51,13 +48,7 @@ class ToolResult:
 
 
 class DeclarativeTool(ABC):
-    """
-    Base class for all tools. Matches gemini-cli's DeclarativeTool.
-    
-    Subclasses must implement:
-    - execute(params) → ToolResult
-    - schema (property) → dict (JSON Schema for function calling)
-    """
+
 
     def __init__(
         self,

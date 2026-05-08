@@ -1,7 +1,4 @@
-"""
-GrepTool — Search for patterns in files using regex.
-Ref: gemini-cli/packages/core/src/tools/grep.ts
-"""
+
 import os
 import re
 import subprocess

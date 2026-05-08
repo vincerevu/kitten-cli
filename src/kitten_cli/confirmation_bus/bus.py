@@ -1,7 +1,4 @@
-"""
-Confirmation Bus — Async pub/sub message bus for tool confirmations.
-Ref: gemini-cli/packages/core/src/confirmation-bus/message-bus.ts
-"""
+
 import asyncio
 import uuid
 from typing import Any, Callable, Dict, List, Optional

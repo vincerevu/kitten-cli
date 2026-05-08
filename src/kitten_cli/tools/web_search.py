@@ -1,7 +1,4 @@
-"""
-WebSearchTool — Web search.
-Ref: gemini-cli/packages/core/src/tools/web-search.ts
-"""
+
 from typing import Any, Optional
 from kitten_cli.tools.base import DeclarativeTool, ToolKind, ToolResult
 

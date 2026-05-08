@@ -1,7 +1,4 @@
-"""
-Tool Registry — Manages all available tools.
-Ref: gemini-cli/packages/core/src/tools/tool-registry.ts
-"""
+
 from typing import Any, Dict, List, Optional
 from kitten_cli.tools.base import DeclarativeTool
 

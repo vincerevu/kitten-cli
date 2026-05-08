@@ -1,7 +1,4 @@
-"""
-Confirmation Bus — Pub/sub message bus for tool confirmations.
-Ref: gemini-cli/packages/core/src/confirmation-bus/types.ts
-"""
+
 from enum import Enum
 from typing import Any, Dict, List, Optional
 from pydantic import BaseModel

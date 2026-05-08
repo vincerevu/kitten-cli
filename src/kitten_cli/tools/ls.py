@@ -1,7 +1,4 @@
-"""
-LSTool — List directory contents.
-Ref: gemini-cli/packages/core/src/tools/ls.ts
-"""
+
 import os
 from typing import Any, Optional
 from kitten_cli.tools.base import DeclarativeTool, ToolKind, ToolResult

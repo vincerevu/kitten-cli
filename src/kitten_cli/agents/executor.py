@@ -1,16 +1,4 @@
-"""
-Agent Executor — Main agent loop with policy integration.
-Ref: gemini-cli/packages/core/src/agents/local-executor.ts
 
-Flow per turn:
-1. Stream LLM response → accumulate text + tool calls
-2. For each tool call:
-   a. check_policy() → ALLOW / DENY / ASK_USER
-   b. If ASK_USER → yield TOOL_CALL_CONFIRMATION event, wait for response via bus
-   c. If ALLOW → execute tool
-   d. If DENY → return error to LLM
-3. Append tool results to history → next turn
-"""
 import json
 import asyncio
 from typing import Any, AsyncGenerator, Dict, List, Optional

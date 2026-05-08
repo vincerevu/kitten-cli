@@ -1,7 +1,4 @@
-"""
-AskUserTool — Ask the user a question and wait for response.
-Ref: gemini-cli/packages/core/src/tools/ask-user.ts
-"""
+
 from typing import Any, Dict, List, Optional
 from kitten_cli.tools.base import DeclarativeTool, ToolKind, ToolResult
 

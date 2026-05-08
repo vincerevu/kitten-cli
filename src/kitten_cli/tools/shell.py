@@ -1,7 +1,4 @@
-"""
-ShellTool — Execute shell commands.
-Ref: gemini-cli/packages/core/src/tools/shell.ts
-"""
+
 import asyncio
 import os
 import platform

@@ -1,7 +1,4 @@
-"""
-MemoryTool — Read/write KITTEN.md memory file.
-Ref: gemini-cli/packages/core/src/tools/memoryTool.ts
-"""
+
 import os
 from typing import Any, Optional
 from kitten_cli.tools.base import DeclarativeTool, ToolKind, ToolResult

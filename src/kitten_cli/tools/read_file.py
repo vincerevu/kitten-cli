@@ -1,7 +1,4 @@
-"""
-ReadFileTool — Read file contents with line range support.
-Ref: gemini-cli/packages/core/src/tools/read-file.ts
-"""
+
 import os
 from typing import Any, Optional
 from kitten_cli.tools.base import DeclarativeTool, ToolKind, ToolResult

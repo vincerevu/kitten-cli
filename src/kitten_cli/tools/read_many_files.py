@@ -1,7 +1,4 @@
-"""
-ReadManyFilesTool — Read multiple files in a single call.
-Ref: gemini-cli/packages/core/src/tools/read-many-files.ts
-"""
+
 import os
 from typing import Any, List
 from kitten_cli.tools.base import DeclarativeTool, ToolKind, ToolResult

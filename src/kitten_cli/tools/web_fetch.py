@@ -1,7 +1,4 @@
-"""
-WebFetchTool — Fetch content from a URL.
-Ref: gemini-cli/packages/core/src/tools/web-fetch.ts
-"""
+
 import asyncio
 from typing import Any, Optional
 from kitten_cli.tools.base import DeclarativeTool, ToolKind, ToolResult

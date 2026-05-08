@@ -1,7 +1,4 @@
-"""
-CompleteTaskTool — Signal task completion to the agent loop.
-Ref: gemini-cli/packages/core/src/tools/complete-task.ts
-"""
+
 from typing import Any
 from kitten_cli.tools.base import DeclarativeTool, ToolKind, ToolResult
 
