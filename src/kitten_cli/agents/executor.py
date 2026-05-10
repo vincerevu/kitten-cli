@@ -1,4 +1,3 @@
-
 import json
 import asyncio
 from typing import Any, AsyncGenerator, Dict, List, Optional
@@ -28,11 +27,11 @@ class AgentExecutor:
     """
 
     def __init__(
-        self,
-        config: AppConfig,
-        tool_registry: Optional[ToolRegistry] = None,
-        message_bus: Optional[MessageBus] = None,
-        max_turns: int = DEFAULT_MAX_TURNS,
+            self,
+            config: AppConfig,
+            tool_registry: Optional[ToolRegistry] = None,
+            message_bus: Optional[MessageBus] = None,
+            max_turns: int = DEFAULT_MAX_TURNS,
     ):
         self.config = config
         self.llm = KittenLLM()
@@ -41,7 +40,7 @@ class AgentExecutor:
         self.max_turns = max_turns
 
     async def run(
-        self, messages: List[Dict[str, Any]]
+            self, messages: List[Dict[str, Any]]
     ) -> AsyncGenerator[AgentEvent, None]:
         """Run the agent loop, yielding events for each step."""
         history = list(messages)
@@ -53,8 +52,8 @@ class AgentExecutor:
 
             # --- Stream LLM response ---
             async for event in self.llm.stream(
-                messages=history,
-                tools=tool_schemas,
+                    messages=history,
+                    tools=tool_schemas,
             ):
                 if event.type == AgentEventType.CONTENT:
                     text_buffer += event.value
@@ -134,7 +133,7 @@ class AgentExecutor:
                 )
                 yield AgentEvent(type=AgentEventType.TOOL_CALL_REQUEST, value=req_info)
 
-                # --- Phase 1.7: Policy check ---
+
                 decision = check_policy(tool_name, req_args, self.config)
 
                 if decision == PolicyDecision.DENY:

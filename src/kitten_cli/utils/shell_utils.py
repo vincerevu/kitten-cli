@@ -1,7 +1,4 @@
-"""
-Shell utilities — command parsing and sanitization.
-Ref: gemini-cli/packages/core/src/utils/shell-utils.ts
-"""
+
 import platform
 import re
 import shlex

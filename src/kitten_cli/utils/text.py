@@ -1,7 +1,4 @@
-"""
-Text utilities.
-Ref: gemini-cli/packages/core/src/utils/textUtils.ts
-"""
+
 from typing import Optional
 
 

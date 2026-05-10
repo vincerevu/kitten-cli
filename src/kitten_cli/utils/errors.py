@@ -1,7 +1,4 @@
-"""
-Error types and formatting.
-Ref: gemini-cli/packages/core/src/utils/errors.ts
-"""
+
 from typing import Optional
 
 

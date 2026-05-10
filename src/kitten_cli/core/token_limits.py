@@ -1,7 +1,3 @@
-"""
-Token limits and budget calculation.
-Ref: gemini-cli/packages/core/src/core/tokenLimits.ts
-"""
 
 # Token limits for popular models
 MODEL_TOKEN_LIMITS = {

@@ -7,7 +7,10 @@ class PolicyDecision(str, Enum):
     ASK_USER = "ask_user"
 
 # Tools that make modifications
-EDIT_TOOL_NAMES = {"multi_replace_file_content", "replace_file_content", "write_to_file"}
+EDIT_TOOL_NAMES = {
+    "write_file", "edit_file",                           # kitten-cli names
+    "multi_replace_file_content", "replace_file_content", "write_to_file",  # gemini-cli compat
+}
 COMMAND_TOOL_NAMES = {"run_command"}
 
 def check_policy(tool_name: str, args: dict, config: AppConfig) -> PolicyDecision:

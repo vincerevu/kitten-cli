@@ -1,7 +1,4 @@
-"""
-Config schema validation — Pydantic validators for config fields.
-Ref: gemini-cli/packages/core/src/config/config.ts (zod schemas)
-"""
+
 from typing import Any, Dict, List, Optional
 from pydantic import BaseModel, Field, field_validator
 

@@ -116,10 +116,15 @@ class MessageBus:
         for the correlated response.
         """
         correlation_id = str(uuid.uuid4())
-        future: asyncio.Future[ToolConfirmationResponse] = asyncio.get_event_loop().create_future()
+        self._pending_correlation_id = correlation_id
+        future: asyncio.Future[ToolConfirmationResponse] = asyncio.get_running_loop().create_future()
 
         def on_response(response: ToolConfirmationResponse):
-            if response.correlation_id == correlation_id and not future.done():
+            # Match exact correlation_id OR empty (broadcast respond)
+            if not future.done() and (
+                response.correlation_id == correlation_id
+                or response.correlation_id == ""
+            ):
                 future.set_result(response)
 
         self.subscribe(MessageBusType.TOOL_CONFIRMATION_RESPONSE, on_response)
@@ -134,4 +139,18 @@ class MessageBus:
             )
             return await asyncio.wait_for(future, timeout=timeout_seconds)
         finally:
+            self._pending_correlation_id = None
             self.unsubscribe(MessageBusType.TOOL_CONFIRMATION_RESPONSE, on_response)
+
+    async def respond(self, confirmed: bool, correlation_id: Optional[str] = None) -> None:
+        """
+        UI side: respond to the current pending confirmation request.
+        If correlation_id is None, uses the tracked pending ID (or broadcasts).
+        """
+        cid = correlation_id or getattr(self, "_pending_correlation_id", None) or ""
+        response = ToolConfirmationResponse(
+            correlation_id=cid,
+            confirmed=confirmed,
+        )
+        self._emit(MessageBusType.TOOL_CONFIRMATION_RESPONSE, response)
+

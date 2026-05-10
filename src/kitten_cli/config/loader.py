@@ -1,7 +1,4 @@
-"""
-Config file loader — TOML/JSON parsing.
-Ref: gemini-cli/packages/core/src/config/toml-loader.ts
-"""
+
 import os
 import json
 from typing import Any, Dict, Optional

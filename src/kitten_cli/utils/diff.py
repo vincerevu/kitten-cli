@@ -1,7 +1,4 @@
-"""
-Diff generation utilities.
-Ref: gemini-cli/packages/core/src/utils/fileDiffUtils.ts
-"""
+
 import difflib
 from typing import Optional
 

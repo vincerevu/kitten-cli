@@ -1,7 +1,4 @@
-"""
-File I/O helpers.
-Ref: gemini-cli/packages/core/src/utils/fileUtils.ts
-"""
+
 import os
 from typing import Optional, Tuple
 

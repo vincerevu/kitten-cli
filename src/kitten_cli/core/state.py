@@ -1,7 +1,4 @@
-"""
-Core state — Session state tracking.
-Ref: gemini-cli/packages/core/src/config/config.ts (session part)
-"""
+
 import time
 import uuid
 from typing import Any, Dict, List, Optional

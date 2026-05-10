@@ -1,8 +1,4 @@
-"""
-Ignore patterns — .gitignore / .kittenignore parsing.
-Ref: gemini-cli/packages/core/src/utils/ignorePatterns.ts
-Ref: gemini-cli/packages/core/src/utils/gitIgnoreParser.ts
-"""
+
 import os
 import fnmatch
 from typing import List, Optional, Set

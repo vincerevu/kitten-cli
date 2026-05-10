@@ -1,7 +1,4 @@
-"""
-Event emitter utility.
-Ref: gemini-cli/packages/core/src/utils/events.ts
-"""
+
 import asyncio
 from typing import Any, Callable, Dict, List
 

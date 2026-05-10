@@ -1,7 +1,4 @@
-"""
-Path utilities.
-Ref: gemini-cli/packages/core/src/utils/paths.ts
-"""
+
 import os
 import platform
 from typing import Optional

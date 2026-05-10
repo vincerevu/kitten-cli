@@ -1,7 +1,4 @@
-"""
-Core event types for kitten-cli.
-Ref: gemini-cli/packages/core/src/core/turn.ts — GeminiEventType
-"""
+
 from enum import Enum
 from typing import Any, Dict, List, Optional
 from pydantic import BaseModel

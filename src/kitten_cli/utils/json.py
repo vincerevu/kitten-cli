@@ -1,7 +1,4 @@
-"""
-JSON utilities — safe serialization.
-Ref: gemini-cli/packages/core/src/utils/safeJsonStringify.ts
-"""
+
 import json
 from typing import Any
 
