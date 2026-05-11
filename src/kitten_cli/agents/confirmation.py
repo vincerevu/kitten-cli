@@ -1,43 +1,55 @@
-from enum import Enum
-from kitten_cli.config.settings import ApprovalMode, AppConfig
+"""
+agents/confirmation.py — Bridge between old check_policy() API and new PolicyEngine.
 
+Maintains backward compatibility: check_policy(tool_name, args, config) → PolicyDecision
+Now delegates to policy.engine.PolicyEngine internally.
+"""
+
+from __future__ import annotations
+
+from enum import Enum
+from typing import Any, Dict
+
+from kitten_cli.config.settings import AppConfig
+from kitten_cli.config.settings import ApprovalMode as ConfigApprovalMode
+from kitten_cli.policy.types import (
+    ApprovalMode as PolicyApprovalMode,
+    PermissionDecision,
+    PolicySettings,
+)
+from kitten_cli.policy.engine import PolicyEngine
+
+
+# Re-export for backward compat
 class PolicyDecision(str, Enum):
     ALLOW = "allow"
     DENY = "deny"
     ASK_USER = "ask_user"
 
-# Tools that make modifications
-EDIT_TOOL_NAMES = {
-    "write_file", "edit_file",                           # kitten-cli names
-    "multi_replace_file_content", "replace_file_content", "write_to_file",  # gemini-cli compat
-}
-COMMAND_TOOL_NAMES = {"run_command"}
 
-def check_policy(tool_name: str, args: dict, config: AppConfig) -> PolicyDecision:
+# Map ConfigApprovalMode → PolicyApprovalMode
+_MODE_MAP = {
+    ConfigApprovalMode.DEFAULT: PolicyApprovalMode.DEFAULT,
+    ConfigApprovalMode.AUTO_EDIT: PolicyApprovalMode.AUTO_EDIT,
+    ConfigApprovalMode.YOLO: PolicyApprovalMode.YOLO,
+    ConfigApprovalMode.PLAN: PolicyApprovalMode.PLAN,
+}
+
+# Map PermissionDecision → PolicyDecision
+_DECISION_MAP = {
+    PermissionDecision.ALLOW: PolicyDecision.ALLOW,
+    PermissionDecision.DENY: PolicyDecision.DENY,
+    PermissionDecision.ASK_USER: PolicyDecision.ASK_USER,
+}
+
+
+def check_policy(tool_name: str, args: Dict[str, Any], config: AppConfig) -> PolicyDecision:
     """
     Check if a tool execution is allowed based on the current ApprovalMode.
+
+    Delegates to PolicyEngine for full rule matching.
     """
-    mode = config.approval_mode
-
-    # YOLO mode allows everything
-    if mode == ApprovalMode.YOLO:
-        return PolicyDecision.ALLOW
-
-    # PLAN mode denies edits and commands, allows reads
-    if mode == ApprovalMode.PLAN:
-        if tool_name in EDIT_TOOL_NAMES or tool_name in COMMAND_TOOL_NAMES:
-            return PolicyDecision.DENY
-        return PolicyDecision.ALLOW
-
-    # AUTO_EDIT mode allows file edits, asks for commands
-    if mode == ApprovalMode.AUTO_EDIT:
-        if tool_name in COMMAND_TOOL_NAMES:
-            return PolicyDecision.ASK_USER
-        return PolicyDecision.ALLOW
-
-    # DEFAULT mode asks for both edits and commands
-    if tool_name in EDIT_TOOL_NAMES or tool_name in COMMAND_TOOL_NAMES:
-        return PolicyDecision.ASK_USER
-        
-    # Read-only tools are allowed by default
-    return PolicyDecision.ALLOW
+    policy_mode = _MODE_MAP.get(config.approval_mode, PolicyApprovalMode.DEFAULT)
+    engine = PolicyEngine(PolicySettings(approval_mode=policy_mode))
+    result = engine.check(tool_name, args)
+    return _DECISION_MAP.get(result.decision, PolicyDecision.ASK_USER)
