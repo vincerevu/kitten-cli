@@ -1,0 +1,1 @@
+"""kitten-cli root package."""
