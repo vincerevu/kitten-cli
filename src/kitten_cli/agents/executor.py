@@ -19,6 +19,8 @@ from kitten_cli.confirmation_bus.types import (
     ToolConfirmationResponse,
 )
 
+from kitten_cli.context.manager import ContextManager
+
 
 class AgentExecutor:
     """
@@ -38,6 +40,7 @@ class AgentExecutor:
         self.registry = tool_registry or ToolRegistry()
         self.bus = message_bus or MessageBus(config)
         self.max_turns = max_turns
+        self.context_manager = ContextManager(config)
 
     async def run(
             self, messages: List[Dict[str, Any]]
@@ -49,6 +52,9 @@ class AgentExecutor:
         for turn in range(self.max_turns):
             text_buffer = ""
             tool_calls_buffer: Dict[int, dict] = {}
+            
+            # Context management
+            history = await self.context_manager.manage_context(history)
 
             # --- Stream LLM response ---
             async for event in self.llm.stream(
