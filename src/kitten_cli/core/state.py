@@ -17,6 +17,12 @@ class SessionState(BaseModel):
     is_compressed: bool = False
     history: List[Dict[str, Any]] = Field(default_factory=list)
 
+    def add_message(self, message: Any) -> None:
+        if hasattr(message, "model_dump"):
+            self.history.append(message.model_dump())
+        else:
+            self.history.append(message)
+
     @property
     def elapsed_seconds(self) -> float:
         return time.time() - self.start_time
