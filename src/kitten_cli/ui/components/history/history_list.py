@@ -11,8 +11,11 @@ class HistoryList(Widget):
     
     DEFAULT_CSS = """
     HistoryList {
-        height: 1fr;
+        height: auto;
         width: 100%;
+    }
+    #chat-history-scroll {
+        height: auto;
     }
     """
     

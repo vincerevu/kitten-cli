@@ -17,18 +17,65 @@ class ChatInput(Widget):
     DEFAULT_CSS = """
     ChatInput {
         height: auto;
-        max-height: 10;
-        border: solid $primary;
-        padding: 0 1;
-        margin: 1 2;
+        border: none;
+        padding: 0;
+        margin: 0;
+        background: transparent;
+    }
+    
+    #hints-container {
+        height: 1;
+        layout: horizontal;
+    }
+    
+    #hint-left {
+        color: gray;
+        width: 1fr;
+        text-align: left;
+    }
+    
+    TextArea {
+        background: #333333 !important;
+        color: white;
+        border: none !important;
+        height: auto;
+        min-height: 1;
+        max-height: 8;
+        padding: 0;
+        width: 1fr;
+    }
+    
+    TextArea:focus {
+        background: #333333 !important;
+        border: none !important;
+    }
+    
+    #input-row {
+        height: auto;
+        layout: horizontal;
+        background: #333333;
+    }
+    
+    #input-prompt {
+        width: 2;
+        background: #333333;
+        color: magenta;
+        padding-left: 0;
+        text-style: bold;
     }
     """
     
     def compose(self) -> ComposeResult:
-        # A simple multiline text area
-        text_area = TextArea(language="markdown", id="composer-text-area")
-        text_area.show_line_numbers = False
-        yield text_area
+        with Vertical():
+            with Horizontal(id="hints-container"):
+                yield Static("Shift+Tab to accept edits", id="hint-left")
+                
+            # A simple multiline text area
+            with Horizontal(id="input-row"):
+                yield Static("> ", id="input-prompt")
+                text_area = TextArea(language="markdown", id="composer-text-area")
+                text_area.show_line_numbers = False
+                yield text_area
 
     def on_key(self, event) -> None:
         if event.key == "enter":
